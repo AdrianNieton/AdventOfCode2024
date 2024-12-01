@@ -1,6 +1,7 @@
 package day1
 
-import AdventDay
+import common.AdventDay
+import common.Result
 import kotlin.math.abs
 
 
@@ -22,21 +23,21 @@ class Day1(private val filename: String = "day1.txt"): AdventDay() {
         }
     }
 
-    override fun part1() {
+    override fun part1() : Result {
         leftList.sort()
         rightList.sort()
         val totalDistance = leftList.zip(rightList) { left, right ->
             abs(left - right)
         }.sum()
-        println("Part1: $totalDistance")
+        return Result.Number(totalDistance)
     }
 
-    override fun part2() {
+    override fun part2() : Result {
         val frequencyMap = rightList.groupingBy { it }.eachCount()
         val similarityScore = leftList.sumOf { leftNum ->
             (frequencyMap[leftNum] ?: 0) * leftNum
         }
-        println("Part2: $similarityScore")
+       return Result.Number(similarityScore)
     }
 
 //  First version O(N^2)
