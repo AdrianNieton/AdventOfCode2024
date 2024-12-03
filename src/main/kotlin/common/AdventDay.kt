@@ -25,7 +25,9 @@ abstract class AdventDay {
     }
 
     protected fun solve() {
+        println("--------${this.javaClass.simpleName}--------")
         println("Part 1 : ${formatResult(part1())}")
         println("Part 2 : ${formatResult(part2())}")
+        println()
     }
 }
