@@ -23,21 +23,28 @@ class Day3(private val filename: String = "day3.txt") : AdventDay() {
         }
     }
 
-    private fun reset() {
-        instructions.clear()
-//        regex = Regex(
-//            """(?<!don't\(\).*?)mul\((\d+),(\d+)\)(?=[^d]|d(?!on't\())*$"""
-//        )
-        //processFile(readFile(filename))
-    }
-
     override fun part1(): Result {
         val sum = instructions.sumOf { pair -> pair.first * pair.second }
         return Result.Number(sum)
     }
 
     override fun part2(): Result {
-        reset()
-        return Result.Number(0)
+        instructions.clear()
+        var enabled = true
+        regex = Regex("""do\(\)|don't\(\)|mul\((\d+),(\d+)\)""")
+        readFile(filename).forEach { line ->
+            regex.findAll(line).forEach { match ->
+                if (match.value == "do()") enabled = true
+                if (match.value == "don't()") enabled = false
+                if (enabled && match.value != "do()") {
+                    val (first, second) = match.destructured
+                    instructions.add(Pair(first.toInt(), second.toInt()))
+                }
+            }
+
+        }
+
+        val sum = instructions.sumOf { pair -> pair.first * pair.second }
+        return Result.Number(sum)
     }
 }

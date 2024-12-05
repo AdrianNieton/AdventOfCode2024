@@ -3,7 +3,7 @@ package common
 import java.io.File
 
 abstract class AdventDay {
-    val staticPath = "src/main/resources/"
+    private val staticPath = "src/main/resources/"
 
     protected fun readFile(filename: String = ""): List<String> {
         return try {
@@ -18,7 +18,7 @@ abstract class AdventDay {
     protected abstract fun part1(): Result
     protected abstract fun part2(): Result
 
-    protected fun formatResult(result: Result): String {
+    private fun formatResult(result: Result): String {
         return when (result) {
             is Result.Number -> result.value.toString()
         }
