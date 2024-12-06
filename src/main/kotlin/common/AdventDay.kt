@@ -4,6 +4,7 @@ import java.io.File
 
 abstract class AdventDay {
     private val staticPath = "src/main/resources/"
+    private var config = ProcessFileConfig(emptyList())
 
     protected fun readFile(filename: String = ""): List<String> {
         return try {
@@ -14,9 +15,22 @@ abstract class AdventDay {
         }
     }
 
-    protected abstract fun processFile(lines: List<String>)
+    protected abstract fun processFile(config: ProcessFileConfig = this.config): Any
     protected abstract fun part1(): Result
     protected abstract fun part2(): Result
+
+    protected fun getConfig() = config
+    protected fun updateConfig(
+        lines: List<String>? = null,
+        regex: Regex? = null,
+        flag: Boolean? = null
+    ) {
+        config = config.copy(
+            lines =  lines ?: config.lines,
+            regex = regex ?: config.regex,
+            flag = flag ?: config.flag
+        )
+    }
 
     private fun formatResult(result: Result): String {
         return when (result) {
@@ -31,3 +45,9 @@ abstract class AdventDay {
         println()
     }
 }
+
+data class ProcessFileConfig(
+    val lines: List<String>,
+    val regex: Regex = Regex(".*"),
+    val flag: Boolean = true
+)

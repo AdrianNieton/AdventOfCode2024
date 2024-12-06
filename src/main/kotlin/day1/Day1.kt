@@ -1,6 +1,7 @@
 package day1
 
 import common.AdventDay
+import common.ProcessFileConfig
 import common.Result
 import kotlin.math.abs
 
@@ -11,13 +12,15 @@ class Day1(private val filename: String = "day1.txt"): AdventDay() {
 
     init {
         val lines = this.readFile(filename)
-        processFile(lines)
+        updateConfig(lines = lines, regex = "\\s+".toRegex())
+        processFile(getConfig())
         this.solve()
     }
 
-    override fun processFile(lines: List<String>) {
+    override fun processFile(config: ProcessFileConfig) {
+        val (lines, regex) = config
         lines.forEach { line ->
-            val (num1, num2) = line.split("\\s+".toRegex()).map { num -> num.toInt() }
+            val (num1, num2) = line.split(regex).map { num -> num.toInt() }
             leftList.add(num1)
             rightList.add(num2)
         }
