@@ -35,6 +35,7 @@ abstract class AdventDay {
     private fun formatResult(result: Result): String {
         return when (result) {
             is Result.Number -> result.value.toString()
+            is Result.Long -> result.value.toString()
         }
     }
 
